@@ -12,27 +12,6 @@ RUN apt-get -qq update \
  && pip install --upgrade pip \
  && rm -fR /tmp/*
 
-# ----------------------------------------------------------------------- nodejs
-RUN curl -sLO https://deb.nodesource.com/setup_6.x \
- && chmod +x setup_6.x \
- && ./setup_6.x \
- && apt-get -qq install -y nodejs \
- && apt-get -qq clean -y \
- && rm setup_6.x \
- && rm -fR /tmp/* \
- && npm update  -g \
- && npm install -g node-gyp bower grunt-cli gulp-cli karma-cli
-
-# ------------------------------------------------------------------------ maven
-ENV MAVEN_VERSION 3.3.9
-
-RUN (curl -L http://www.us.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | gunzip -c | tar x) \
- && mv apache-maven-$MAVEN_VERSION apache-maven
-
-ENV M2_HOME /apache-maven
-ENV MAVEN_OPTS -Xmx512m -Xss256k -XX:+UseCompressedOops
-ENV PATH $PATH:$M2_HOME/bin
-
 # --------------------------------------------------------------- teamcity-agent
 ENV TEAMCITY_VERSION 10.0.3
 
@@ -48,6 +27,27 @@ RUN curl -LO http://download.jetbrains.com/teamcity/TeamCity-$TEAMCITY_VERSION.w
 
 RUN sed -i 's/serverUrl=http:\/\/localhost:8111\//serverUrl=http:\/\/teamcity:8080\/teamcity\//' /teamcity-agent/conf/buildAgent.properties \
  && sed -i 's/workDir=..\/work/workDir=\/home\/teamcity\/work/'                                  /teamcity-agent/conf/buildAgent.properties
+
+# ----------------------------------------------------------------------- nodejs
+RUN curl -sLO https://deb.nodesource.com/setup_6.x \
+ && chmod +x setup_6.x \
+ && ./setup_6.x \
+ && apt-get -qq install -y nodejs \
+ && apt-get -qq clean -y \
+ && rm setup_6.x \
+ && rm -fR /tmp/* \
+ && npm update  -g \
+ && npm install -g node-gyp bower grunt-cli gulp-cli karma-cli typescript angular-cli
+
+# ------------------------------------------------------------------------ maven
+ENV MAVEN_VERSION 3.3.9
+
+RUN (curl -L http://www.us.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | gunzip -c | tar x) \
+ && mv apache-maven-$MAVEN_VERSION apache-maven
+
+ENV M2_HOME /apache-maven
+ENV MAVEN_OPTS -Xmx512m -Xss256k -XX:+UseCompressedOops
+ENV PATH $PATH:$M2_HOME/bin
 
 # ---------------------------------------------------------- aws-maven extension
 ENV AWS_MAVEN_VERSION 5.0.0.RELEASE
