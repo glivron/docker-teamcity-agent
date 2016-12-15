@@ -7,10 +7,18 @@ ENV LC_ALL en_US.UTF-8
 
 RUN apt-get -qq update \
  && apt-get -qq upgrade -y \
- && apt-get -qq install -y openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
- && apt-get -qq clean -y \
+ && apt-get -qq install -y apt-transport-https ca-certificates openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
+
+ && apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
+ && echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list \
+ && apt-get -qq update \
+ && apt-get -qq install -y docker-engine \
+ && usermod -aG docker teamcity \
+
  && pip install --upgrade pip \
  && pip install awscli \
+
+ && apt-get -qq clean -y \
  && rm -fR /tmp/*
 
 # --------------------------------------------------------------- teamcity-agent
