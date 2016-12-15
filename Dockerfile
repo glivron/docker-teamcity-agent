@@ -13,7 +13,6 @@ RUN apt-get -qq update \
  && echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list \
  && apt-get -qq update \
  && apt-get -qq install -y docker-engine \
- && usermod -aG docker teamcity \
 
  && pip install --upgrade pip \
  && pip install awscli \
@@ -69,6 +68,7 @@ RUN mvn dependency:get -DgroupId=org.springframework.build -DartifactId=aws-mave
 
 
 RUN useradd -m teamcity \
+ && usermod -aG docker teamcity \
  && chown -R teamcity:teamcity /apache-maven /usr/lib/node_modules /teamcity-agent
 
 USER teamcity
