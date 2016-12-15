@@ -10,6 +10,7 @@ RUN apt-get -qq update \
  && apt-get -qq install -y openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
  && apt-get -qq clean -y \
  && pip install --upgrade pip \
+ && pip install awscli \
  && rm -fR /tmp/*
 
 # --------------------------------------------------------------- teamcity-agent
