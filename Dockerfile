@@ -41,7 +41,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
  && apt-get -qq install -y nodejs \
  && apt-get -qq clean -y          \
  && npm update  -g                \
- && npm install -g node-gyp bower grunt-cli gulp-cli karma-cli typescript angular-cli
+ && npm install -g node-gyp bower grunt-cli gulp-cli karma-cli angular-cli
 
 # ------------------------------------------------------------------------ maven
 ENV MAVEN_VERSION 3.3.9
