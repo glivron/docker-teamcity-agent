@@ -7,7 +7,7 @@ ENV LC_ALL en_US.UTF-8
 
 RUN apt-get -qq update \
  && apt-get -qq upgrade -y \
- && apt-get -qq install -y apt-transport-https ca-certificates openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
+ && apt-get -qq install -y apt-transport-https ca-certificates iputils-ping openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
 
  && apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
  && echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list \
@@ -37,14 +37,10 @@ RUN sed -i 's/serverUrl=http:\/\/localhost:8111\//serverUrl=http:\/\/teamcity:80
  && sed -i 's/workDir=..\/work/workDir=\/home\/teamcity\/work/'                                  /teamcity-agent/conf/buildAgent.properties
 
 # ----------------------------------------------------------------------- nodejs
-RUN curl -sLO https://deb.nodesource.com/setup_6.x \
- && chmod +x setup_6.x \
- && ./setup_6.x \
+RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - \
  && apt-get -qq install -y nodejs \
- && apt-get -qq clean -y \
- && rm setup_6.x \
- && rm -fR /tmp/* \
- && npm update  -g \
+ && apt-get -qq clean -y          \
+ && npm update  -g                \
  && npm install -g node-gyp bower grunt-cli gulp-cli karma-cli typescript angular-cli
 
 # ------------------------------------------------------------------------ maven
