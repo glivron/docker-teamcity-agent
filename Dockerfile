@@ -37,7 +37,7 @@ RUN sed -i 's/serverUrl=http:\/\/localhost:8111\//serverUrl=http:\/\/teamcity:80
  && sed -i 's/workDir=..\/work/workDir=\/home\/teamcity\/work/'                                  /teamcity-agent/conf/buildAgent.properties
 
 # ----------------------------------------------------------------------- nodejs
-RUN curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - \
+RUN curl -sL https://deb.nodesource.com/setup_6.x | -E bash - \
  && apt-get -qq install -y nodejs \
  && apt-get -qq clean -y          \
  && npm update  -g                \
