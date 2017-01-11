@@ -5,9 +5,9 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN apt-get -qq update \
+RUN apt-get -qq update     \
  && apt-get -qq upgrade -y \
- && apt-get -qq install -y apt-transport-https ca-certificates iputils-ping openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
+ && apt-get -qq install -y apt-utils apt-transport-https ca-certificates iputils-ping openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
 
  && apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
  && echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list \
@@ -39,9 +39,16 @@ RUN sed -i 's/serverUrl=http:\/\/localhost:8111\//serverUrl=http:\/\/teamcity:80
 # ----------------------------------------------------------------------- nodejs
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
  && apt-get -qq install -y nodejs \
- && apt-get -qq clean -y          \
- && npm update  -g                \
- && npm install -g node-gyp bower grunt-cli gulp-cli karma-cli angular-cli
+ && apt-get -qq clean -y
+
+RUN npm update  -g
+RUN npm install -g node-gyp
+RUN npm install -g bower
+RUN npm install -g grunt-cli
+RUN npm install -g gulp-cli
+RUN npm install -g karma-cli
+RUN npm install -g typescript
+RUN npm install -g angular-cli
 
 # ------------------------------------------------------------------------ maven
 ENV MAVEN_VERSION 3.3.9
