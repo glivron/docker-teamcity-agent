@@ -42,6 +42,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
  && apt-get -qq clean -y
 
 RUN npm update  -g
+RUN npm install -g semver
 RUN npm install -g node-gyp
 RUN npm install -g bower
 RUN npm install -g grunt-cli
