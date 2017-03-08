@@ -13,6 +13,8 @@ RUN apt-get -qq update     \
  && echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list \
  && apt-get -qq update \
  && apt-get -qq install -y docker-engine \
+ && curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+ && chmod +x /usr/local/bin/docker-compose \
 
  && pip install --upgrade pip \
  && pip install awscli \
@@ -41,26 +43,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
  && apt-get -qq install -y nodejs    \
  && apt-get -qq clean -y             \
  && npm update  -g                   \
- && npm install -g node-gyp gulp-cli \
-
-# ------------------------------------------------------------------------ maven
-ENV MAVEN_VERSION 3.3.9
-
-RUN (curl -L http://www.us.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | gunzip -c | tar x) \
- && mv apache-maven-$MAVEN_VERSION apache-maven
-
-ENV M2_HOME /apache-maven
-ENV MAVEN_OPTS -Xmx512m -Xss256k -XX:+UseCompressedOops
-ENV PATH $PATH:$M2_HOME/bin
-
-# ---------------------------------------------------------- aws-maven extension
-ENV AWS_MAVEN_VERSION 5.0.0.RELEASE
-
-RUN mvn dependency:get -DgroupId=org.springframework.build -DartifactId=aws-maven -Dversion=$AWS_MAVEN_VERSION \
- && mvn dependency:copy-dependencies -f /root/.m2/repository/org/springframework/build/aws-maven/$AWS_MAVEN_VERSION/aws-maven-$AWS_MAVEN_VERSION.pom -DincludeScope=runtime -DoutputDirectory=/teamcity-agent/plugins/mavenPlugin/maven-watcher-jdk16/ \
- && cp /root/.m2/repository/org/springframework/build/aws-maven/$AWS_MAVEN_VERSION/aws-maven-$AWS_MAVEN_VERSION.jar /teamcity-agent/plugins/mavenPlugin/maven-watcher-jdk16/ \
- && rm -f /teamcity-agent/plugins/mavenPlugin/maven-watcher-jdk16/logback-* \
- && rm -fR /root/.m2
+ && npm install -g node-gyp gulp-cli typescript typings @angular/cli || true \
 
 
 RUN useradd -m teamcity \
