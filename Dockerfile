@@ -23,7 +23,7 @@ RUN apt-get -qq update     \
  && rm -fR /tmp/*
 
 # --------------------------------------------------------------- teamcity-agent
-ENV TEAMCITY_VERSION 10.0.4
+ENV TEAMCITY_VERSION 10.0.5
 
 RUN curl -LO http://download.jetbrains.com/teamcity/TeamCity-$TEAMCITY_VERSION.war \
  && unzip -qq TeamCity-$TEAMCITY_VERSION.war -d /tmp/teamcity \
@@ -48,7 +48,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
 
 RUN useradd -m teamcity \
  && usermod -aG docker teamcity \
- && chown -R teamcity:teamcity /apache-maven /usr/lib/node_modules /teamcity-agent
+ && chown -R teamcity:teamcity /usr/lib/node_modules /teamcity-agent
 
 USER teamcity
 EXPOSE 9090
