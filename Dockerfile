@@ -23,7 +23,7 @@ RUN apt-get -qq update     \
  && rm -fR /tmp/*
 
 # --------------------------------------------------------------- teamcity-agent
-ENV TEAMCITY_VERSION 10.0.5
+ENV TEAMCITY_VERSION 2017.1
 
 RUN curl -LO http://download.jetbrains.com/teamcity/TeamCity-$TEAMCITY_VERSION.war \
  && unzip -qq TeamCity-$TEAMCITY_VERSION.war -d /tmp/teamcity \
