@@ -1,19 +1,14 @@
 FROM ubuntu:xenial
 
-RUN locale-gen en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-
 RUN apt-get -qq update     \
  && apt-get -qq upgrade -y \
- && apt-get -qq install -y apt-utils apt-transport-https ca-certificates iputils-ping openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
+ && apt-get -qq install -y apt-utils apt-transport-https ca-certificates locales iputils-ping openjdk-8-jdk build-essential curl procps git libfontconfig zip imagemagick libjpeg8-dev zlib1g-dev python-pip python-pythonmagick \
 
  && apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
  && echo "deb https://apt.dockerproject.org/repo ubuntu-xenial main" > /etc/apt/sources.list.d/docker.list \
  && apt-get -qq update \
  && apt-get -qq install -y docker-engine \
- && curl -L https://github.com/docker/compose/releases/download/1.11.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+ && curl -L https://github.com/docker/compose/releases/download/1.12.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
  && chmod +x /usr/local/bin/docker-compose \
 
  && pip install --upgrade pip \
@@ -21,6 +16,11 @@ RUN apt-get -qq update     \
 
  && apt-get -qq clean -y \
  && rm -fR /tmp/*
+
+RUN locale-gen en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 
 # --------------------------------------------------------------- teamcity-agent
 ENV TEAMCITY_VERSION 2017.1
