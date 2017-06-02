@@ -23,7 +23,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # --------------------------------------------------------------- teamcity-agent
-ENV TEAMCITY_VERSION 2017.1.1
+ENV TEAMCITY_VERSION 2017.1.2
 
 RUN curl -LO http://download.jetbrains.com/teamcity/TeamCity-$TEAMCITY_VERSION.war \
  && unzip -qq TeamCity-$TEAMCITY_VERSION.war -d /tmp/teamcity \
