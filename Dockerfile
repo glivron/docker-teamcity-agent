@@ -43,7 +43,7 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash - \
  && apt-get -qq install -y nodejs    \
  && apt-get -qq clean -y             \
  && npm update  -g                   \
- && npm install -g node-gyp gulp-cli typescript typings @angular/cli || true
+ && npm install -g node-gyp gulp-cli || true
 
 
 RUN useradd -m teamcity \
